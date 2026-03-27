@@ -1,18 +1,26 @@
-void merge(vector<int>& arr, int l, int m, int r) {
-    vector<int> left(arr.begin() + l, arr.begin() + m + 1);
-    vector<int> right(arr.begin() + m + 1, arr.begin() + r + 1);
-    int i = 0, j = 0, k = l;
-    while (i < left.size() && j < right.size())
-        arr[k++] = (left[i] <= right[j]) ? left[i++] : right[j++];
-    while (i < left.size()) arr[k++] = left[i++];
-    while (j < right.size()) arr[k++] = right[j++];
-}
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) return "";
+        
+        String prefix = strs[0];
+        
+        for (int i = 1; i < strs.length; i++) {
+            prefix = findPrefix(prefix, strs[i]);
+            
+            if (prefix.isEmpty()) break;
+        }
+        
+        return prefix;
+    }
 
-void mergeSort(vector<int>& arr, int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-        mergeSort(arr, l, m);
-        mergeSort(arr, m + 1, r);
-        merge(arr, l, m, r);
+    private String findPrefix(String s1, String s2) {
+        int length = Math.min(s1.length(), s2.length());
+        int i = 0;
+        
+        while (i < length && s1.charAt(i) == s2.charAt(i)) {
+            i++;
+        }
+        
+        return s1.substring(0, i);
     }
 }
